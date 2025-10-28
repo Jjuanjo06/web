@@ -1,28 +1,238 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Red Social Conecta</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MiRed Social</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f3f4f6;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #2563eb;
+      color: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    header input {
+      border-radius: 20px;
+      border: none;
+      padding: 8px 15px;
+      width: 250px;
+      outline: none;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr;
+      gap: 20px;
+      padding: 30px;
+    }
+
+    .sidebar, .suggestions {
+      background-color: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      height: fit-content;
+    }
+
+    .sidebar h2, .suggestions h2 {
+      font-size: 1.2rem;
+      color: #2563eb;
+      margin-bottom: 15px;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .status-box {
+      background-color: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .status-box h3 {
+      color: #2563eb;
+      margin-bottom: 10px;
+    }
+
+    .status-box textarea {
+      width: 100%;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      padding: 10px;
+      resize: none;
+      height: 70px;
+      outline: none;
+    }
+
+    .status-box button {
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .status-box button:hover {
+      background-color: #1e40af;
+    }
+
+    .post {
+      background-color: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .post img {
+      width: 100%;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    .post .author {
+      font-weight: bold;
+      color: #1e3a8a;
+    }
+
+    .post .time {
+      color: #9ca3af;
+      font-size: 0.9rem;
+    }
+
+    .friends, .suggested {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .friend, .suggested-user {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .friend img, .suggested-user img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    footer {
+      background-color: #2563eb;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 30px;
+    }
+
+    @media (max-width: 900px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>Conecta</h1>
-    <p>Tu espacio para compartir, inspirar y conectar con otros.</p>
-  </header>
 
-  <main>
-    <section class="post">
-      <img src="https://source.unsplash.com/800x400/?friends" alt="Amigos">
-      <h2>Bienvenido a Conecta</h2>
-      <p>Publica tus ideas, comparte fotos y comenta lo que piensan otros usuarios.</p>
-    </section>
-  </main>
+<header>
+  <h1>MiRed Social</h1>
+  <input type="text" placeholder="Buscar amigos, publicaciones..." />
+</header>
 
-  <footer>
-    <p>© 2025 Conecta — Hecho con ❤️ y Terraform</p>
-  </footer>
+<main>
+  <section class="sidebar">
+    <h2>Amigos</h2>
+    <div class="friends">
+      <div class="friend">
+        <img src="https://randomuser.me/api/portraits/women/12.jpg" alt="Amiga" />
+        <span>Laura Gómez</span>
+      </div>
+      <div class="friend">
+        <img src="https://randomuser.me/api/portraits/men/9.jpg" alt="Amigo" />
+        <span>Carlos Ruiz</span>
+      </div>
+      <div class="friend">
+        <img src="https://randomuser.me/api/portraits/men/24.jpg" alt="Amigo" />
+        <span>Diego Morales</span>
+      </div>
+      <div class="friend">
+        <img src="https://randomuser.me/api/portraits/women/21.jpg" alt="Amiga" />
+        <span>Andrea Torres</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="content">
+    <div class="status-box">
+      <h3>¿Cómo te sientes hoy?</h3>
+      <textarea placeholder="Comparte tus pensamientos o una foto..."></textarea>
+      <button>Publicar</button>
+    </div>
+
+    <div class="post">
+      <span class="author">Laura Gómez</span> <span class="time">• hace 2 horas</span>
+      <p>Hoy fue un gran día, aprendí mucho sobre AWS y Terraform 😄🚀</p>
+      <img src="https://source.unsplash.com/800x400/?technology,code" alt="Publicación de tecnología">
+    </div>
+
+    <div class="post">
+      <span class="author">Carlos Ruiz</span> <span class="time">• hace 5 horas</span>
+      <p>¡Nada como un café mientras trabajas en tus proyectos!</p>
+      <img src="https://source.unsplash.com/800x400/?coffee,work" alt="Café y trabajo">
+    </div>
+
+    <div class="post">
+      <span class="author">Andrea Torres</span> <span class="time">• ayer</span>
+      <p>Empezando un nuevo curso de desarrollo web, ¡motivadísima! 💻✨</p>
+      <img src="https://source.unsplash.com/800x400/?laptop,learning" alt="Estudiando programación">
+    </div>
+  </section>
+
+  <section class="suggestions">
+    <h2>Sugerencias para ti</h2>
+    <div class="suggested">
+      <div class="suggested-user">
+        <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Sugerencia" />
+        <span>María Pérez</span>
+      </div>
+      <div class="suggested-user">
+        <img src="https://randomuser.me/api/portraits/men/42.jpg" alt="Sugerencia" />
+        <span>José López</span>
+      </div>
+      <div class="suggested-user">
+        <img src="https://randomuser.me/api/portraits/women/18.jpg" alt="Sugerencia" />
+        <span>Camila Rojas</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  &copy; 2025 MiRed Social — Proyecto Telemática AWS + Terraform 🌐
+</footer>
+
 </body>
 </html>
-
