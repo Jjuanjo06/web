@@ -3,236 +3,262 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MiRed Social</title>
+  <title>Mi Red Social</title>
   <style>
+    :root {
+      --color-bg: #f5f5f5;
+      --color-text: #222;
+      --color-card: #fff;
+      --color-accent: #4a90e2;
+    }
+
+    body.dark {
+      --color-bg: #121212;
+      --color-text: #eee;
+      --color-card: #1f1f1f;
+      --color-accent: #4a90e2;
+    }
+
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f3f4f6;
       margin: 0;
-      padding: 0;
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      transition: background 0.3s, color 0.3s;
     }
 
     header {
-      background-color: #2563eb;
-      color: white;
-      padding: 15px 30px;
+      background: var(--color-card);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      padding: 15px 30px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 1.5rem;
+    nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: var(--color-text);
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.2s;
     }
 
-    header input {
-      border-radius: 20px;
-      border: none;
-      padding: 8px 15px;
-      width: 250px;
-      outline: none;
+    nav a:hover {
+      color: var(--color-accent);
     }
 
-    main {
-      display: grid;
-      grid-template-columns: 1fr 2fr 1fr;
-      gap: 20px;
-      padding: 30px;
+    .active {
+      color: var(--color-accent);
     }
 
-    .sidebar, .suggestions {
-      background-color: white;
+    .container {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .post-box {
+      background: var(--color-card);
       padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      height: fit-content;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
-    .sidebar h2, .suggestions h2 {
-      font-size: 1.2rem;
-      color: #2563eb;
-      margin-bottom: 15px;
-    }
-
-    .content {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .status-box {
-      background-color: white;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-
-    .status-box h3 {
-      color: #2563eb;
-      margin-bottom: 10px;
-    }
-
-    .status-box textarea {
+    textarea, .bio-textarea {
       width: 100%;
-      border: 1px solid #d1d5db;
+      resize: none;
+      border: 1px solid #ccc;
       border-radius: 10px;
       padding: 10px;
-      resize: none;
-      height: 70px;
-      outline: none;
+      font-size: 1rem;
+      margin-bottom: 10px;
+      background: var(--color-bg);
+      color: var(--color-text);
     }
 
-    .status-box button {
-      background-color: #2563eb;
+    button {
+      background: var(--color-accent);
       color: white;
       border: none;
-      padding: 10px 20px;
-      border-radius: 10px;
+      border-radius: 8px;
+      padding: 8px 16px;
       cursor: pointer;
-      margin-top: 10px;
     }
 
-    .status-box button:hover {
-      background-color: #1e40af;
+    button:hover {
+      opacity: 0.9;
     }
 
     .post {
-      background-color: white;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      background: var(--color-card);
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
-    .post img {
+    .post h4 {
+      margin: 0 0 5px 0;
+    }
+
+    .post small {
+      color: gray;
+    }
+
+    .dark-toggle {
+      background: none;
+      border: 1px solid var(--color-accent);
+      color: var(--color-accent);
+      border-radius: 20px;
+      padding: 5px 12px;
+      cursor: pointer;
+    }
+
+    .dark-toggle:hover {
+      background: var(--color-accent);
+      color: white;
+    }
+
+    img {
       width: 100%;
       border-radius: 10px;
       margin-top: 10px;
     }
 
-    .post .author {
-      font-weight: bold;
-      color: #1e3a8a;
+    .perfil-info {
+      text-align: center;
     }
 
-    .post .time {
-      color: #9ca3af;
-      font-size: 0.9rem;
-    }
-
-    .friends, .suggested {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .friend, .suggested-user {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .friend img, .suggested-user img {
-      width: 40px;
-      height: 40px;
+    .perfil-info img {
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
       object-fit: cover;
-    }
-
-    footer {
-      background-color: #2563eb;
-      color: white;
-      text-align: center;
-      padding: 15px;
-      margin-top: 30px;
-    }
-
-    @media (max-width: 900px) {
-      main {
-        grid-template-columns: 1fr;
-      }
+      margin-bottom: 10px;
     }
   </style>
 </head>
 <body>
+  <header>
+    <nav>
+      <a class="nav-link active" data-section="inicio">Inicio</a>
+      <a class="nav-link" data-section="muro">Muro</a>
+      <a class="nav-link" data-section="notificaciones">Notificaciones</a>
+      <a class="nav-link" data-section="perfil">Perfil</a>
+    </nav>
+    <button id="darkModeBtn" class="dark-toggle">🌙 Modo Oscuro</button>
+  </header>
 
-<header>
-  <h1>MiRed Social</h1>
-  <input type="text" placeholder="Buscar amigos, publicaciones..." />
-</header>
+  <div class="container">
+    <section id="inicio" class="section active">
+      <h2>Bienvenido a tu red social 🌟</h2>
+      <p>Comparte tus pensamientos, fotos y momentos. Explora lo que otros publican y mantente al día con tus amigos.</p>
+      <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d" alt="Amigos compartiendo" />
+    </section>
 
-<main>
-  <section class="sidebar">
-    <h2>Amigos</h2>
-    <div class="friends">
-      <div class="friend">
-        <img src="https://randomuser.me/api/portraits/women/12.jpg" alt="Amiga" />
-        <span>Laura Gómez</span>
+    <section id="muro" class="section">
+      <div class="post-box">
+        <h3>¿Cómo te sientes hoy?</h3>
+        <textarea id="postText" rows="3" placeholder="Escribe algo..."></textarea>
+        <button onclick="publicar()">Publicar</button>
       </div>
-      <div class="friend">
-        <img src="https://randomuser.me/api/portraits/men/9.jpg" alt="Amigo" />
-        <span>Carlos Ruiz</span>
+
+      <div id="posts">
+        <div class="post">
+          <h4>@sofia_98</h4>
+          <small>Hace 2 horas</small>
+          <p>Hoy fue un día increíble ☀️ Fui al parque con mis amigos y terminamos tomando café. ¡Amo los días así!</p>
+          <img src="https://images.unsplash.com/photo-1503264116251-35a269479413" alt="Día en el parque" />
+        </div>
+
+        <div class="post">
+          <h4>@carlos_dev</h4>
+          <small>Hace 4 horas</small>
+          <p>Trabajando en mi nuevo proyecto de programación 💻🔥. Se viene algo muy grande 👀</p>
+          <img src="https://images.unsplash.com/photo-1556155092-490a1ba16284" alt="Programando" />
+        </div>
+
+        <div class="post">
+          <h4>@luna_art</h4>
+          <small>Hace 6 horas</small>
+          <p>Acabo de terminar este dibujo digital 🎨✨ ¿Qué opinan?</p>
+          <img src="https://images.unsplash.com/photo-1606312618777-05c30d69a7f2" alt="Arte digital" />
+        </div>
       </div>
-      <div class="friend">
-        <img src="https://randomuser.me/api/portraits/men/24.jpg" alt="Amigo" />
-        <span>Diego Morales</span>
+    </section>
+
+    <section id="notificaciones" class="section">
+      <h3>🔔 Notificaciones</h3>
+      <p>No tienes notificaciones por ahora. ¡Vuelve más tarde!</p>
+      <img src="https://images.unsplash.com/photo-1603791440384-56cd371ee9a7" alt="Notificaciones" />
+    </section>
+
+    <section id="perfil" class="section">
+      <div class="perfil-info">
+        <img src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe" alt="Perfil" />
+        <h3>@usuario_demo</h3>
+        <p>Miembro desde: Octubre 2025</p>
+        <h4>Biografía</h4>
+        <textarea class="bio-textarea" rows="4" placeholder="Háblanos un poco de ti..."></textarea>
       </div>
-      <div class="friend">
-        <img src="https://randomuser.me/api/portraits/women/21.jpg" alt="Amiga" />
-        <span>Andrea Torres</span>
-      </div>
-    </div>
-  </section>
+    </section>
+  </div>
 
-  <section class="content">
-    <div class="status-box">
-      <h3>¿Cómo te sientes hoy?</h3>
-      <textarea placeholder="Comparte tus pensamientos o una foto..."></textarea>
-      <button>Publicar</button>
-    </div>
+  <script>
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('.section');
 
-    <div class="post">
-      <span class="author">Laura Gómez</span> <span class="time">• hace 2 horas</span>
-      <p>Hoy fue un gran día, aprendí mucho sobre AWS y Terraform 😄🚀</p>
-      <img src="https://source.unsplash.com/800x400/?technology,code" alt="Publicación de tecnología">
-    </div>
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+        const sectionToShow = link.getAttribute('data-section');
+        sections.forEach(sec => sec.classList.remove('active'));
+        document.getElementById(sectionToShow).classList.add('active');
+      });
+    });
 
-    <div class="post">
-      <span class="author">Carlos Ruiz</span> <span class="time">• hace 5 horas</span>
-      <p>¡Nada como un café mientras trabajas en tus proyectos!</p>
-      <img src="https://source.unsplash.com/800x400/?coffee,work" alt="Café y trabajo">
-    </div>
+    function publicar() {
+      const text = document.getElementById("postText").value.trim();
+      if (!text) return;
+      const posts = document.getElementById("posts");
+      const newPost = document.createElement("div");
+      newPost.className = "post";
+      newPost.innerHTML = `
+        <h4>@usuario_demo</h4>
+        <small>Hace un momento</small>
+        <p>${text}</p>`;
+      posts.prepend(newPost);
+      document.getElementById("postText").value = "";
+    }
 
-    <div class="post">
-      <span class="author">Andrea Torres</span> <span class="time">• ayer</span>
-      <p>Empezando un nuevo curso de desarrollo web, ¡motivadísima! 💻✨</p>
-      <img src="https://source.unsplash.com/800x400/?laptop,learning" alt="Estudiando programación">
-    </div>
-  </section>
-
-  <section class="suggestions">
-    <h2>Sugerencias para ti</h2>
-    <div class="suggested">
-      <div class="suggested-user">
-        <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Sugerencia" />
-        <span>María Pérez</span>
-      </div>
-      <div class="suggested-user">
-        <img src="https://randomuser.me/api/portraits/men/42.jpg" alt="Sugerencia" />
-        <span>José López</span>
-      </div>
-      <div class="suggested-user">
-        <img src="https://randomuser.me/api/portraits/women/18.jpg" alt="Sugerencia" />
-        <span>Camila Rojas</span>
-      </div>
-    </div>
-  </section>
-</main>
-
-<footer>
-  &copy; 2025 MiRed Social — Proyecto Telemática AWS + Terraform 🌐
-</footer>
-
+    const darkBtn = document.getElementById('darkModeBtn');
+    darkBtn.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      darkBtn.textContent = document.body.classList.contains('dark') 
+        ? '☀️ Modo Claro' 
+        : '🌙 Modo Oscuro';
+    });
+  </script>
 </body>
 </html>
